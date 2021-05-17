@@ -940,11 +940,23 @@ namespace utility
       }
       else
       {
+        uint<pieces1> vtemp= value0*value1.highPiece;
+
+        vtemp<<=std::numeric_limits<std::uintmax_t>::digits * (pieces1 - 1u);
+
         return
-          value0 * value1.lowPieces
-            + (value0 * value1.highPiece
-                << std::numeric_limits<std::uintmax_t>::digits
-                    * (pieces1 - 1u));
+          value0*value1.lowPieces + vtemp;
+
+
+
+        /*
+        value0 * value1.lowPieces
+           + (value0 * value1.highPiece
+               << std::numeric_limits<std::uintmax_t>::digits
+                   * (pieces1 - 1u));
+        */
+
+
       }
     }
     template <std::size_t pieces, typename T>
@@ -973,7 +985,7 @@ namespace utility
       }
       else
       {
-        return value0 * std::uintmax_t{ value1 };
+        return value0 * std::uintmax_t{ static_cast<uintmax_t>(value1 )};
       }
     }
     template <std::size_t pieces0, std::size_t pieces1>
