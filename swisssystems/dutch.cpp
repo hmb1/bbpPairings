@@ -68,8 +68,8 @@ namespace swisssystems
         const auto topScoreThreshold =
           utility::uinttypes
               ::uint_least<maxPointsSize>{ tournament.playedRounds }
-            * std::max(tournament.pointsForWin, tournament.pointsForDraw)
-            >> 1;
+            * (std::max(tournament.pointsForWin, tournament.pointsForDraw)
+            >> 1U);
         return
           !player0.forbiddenPairs.count(player1.id)
             && (!player0.absoluteColorPreference()
@@ -259,18 +259,23 @@ namespace swisssystems
           const std::unordered_map<score_difference, score_difference_shift>
             &scoreDifferenceShifts,
           const tournament::points minScoreInBracket,
-          optimality_matching_computer::edge_weight &maxEdgeWeight =
-            optimality_matching_computer::edge_weight{ 0u })
+          optimality_matching_computer::edge_weight &maxEdgeWeight
+          //optimality_matching_computer::edge_weight &maxEdgeWeight =
+          //  optimality_matching_computer::edge_weight{ 0u }
+        )
       {
+
         typename
-            std::conditional<
-              max,
-              decltype(maxEdgeWeight),
-              optimality_matching_computer::edge_weight
-            >::type
-          result{ maxEdgeWeight };
+              std::conditional<
+                max,
+                decltype(maxEdgeWeight),
+                optimality_matching_computer::edge_weight
+                >::type
+                result{ maxEdgeWeight };
 
         result &= 0u;
+
+
 
         // Check compatibility.
         if (!max && !compatible(higherPlayer, lowerPlayer, tournament))
@@ -759,7 +764,10 @@ namespace swisssystems
           utility::typesizes::bitsToRepresent<unsigned int>(
             playersByIndex.size() - nextScoreGroupBegin);
 
-        // Compute an edge weight upper bound.
+        // set here instead of in computeEdgeWeights - clang didnt the setting in ComputeEdgeWeight()
+         maxEdgeWeight = optimality_matching_computer::edge_weight{ 0u };
+
+          // Compute an edge weight upper bound.
         computeEdgeWeight<true>(
           *playersByIndex[0],
           *playersByIndex[0],

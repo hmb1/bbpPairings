@@ -84,10 +84,13 @@ namespace tournament
       }
     }
 
+
     template
     MatchesConfiguration::MatchesConfiguration<std::minstd_rand>(
       Configuration &&,
       std::minstd_rand &);
+
+
 
     namespace
     {
