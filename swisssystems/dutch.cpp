@@ -243,7 +243,7 @@ namespace swisssystems
        * compute an upper bound on the edge weight for this pairing bracket
        * instead.
        */
-      template <bool max = false>
+      template <bool max >
       optimality_matching_computer::edge_weight
         computeEdgeWeight(
           const tournament::Player &higherPlayer,
@@ -764,7 +764,7 @@ namespace swisssystems
           utility::typesizes::bitsToRepresent<unsigned int>(
             playersByIndex.size() - nextScoreGroupBegin);
 
-        // set here instead of in computeEdgeWeights - clang didnt the setting in ComputeEdgeWeight()
+        // set here instead of in computeEdgeWeights - clang didnt like the setting in ComputeEdgeWeight()
          maxEdgeWeight = optimality_matching_computer::edge_weight{ 0u };
 
           // Compute an edge weight upper bound.
@@ -801,7 +801,7 @@ namespace swisssystems
             const tournament::player_index largerPlayerIndex)
           {
             return
-              computeEdgeWeight(
+              computeEdgeWeight<false>(
                 *playersByIndex[smallerPlayerIndex],
                 *playersByIndex[largerPlayerIndex],
                 specialBrackets,
