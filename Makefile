@@ -22,7 +22,7 @@ max_points = 0
 max_rating = 0
 max_rounds = 0
 
-bits = 64
+bits = 32
 profile = no
 optimize = no
 static = no
@@ -51,7 +51,7 @@ else
 			CXXFLAGS += -Og
 		endif
 	else
-		COMPILER_FLAGS += -DNDEBUG
+		# COMPILER_FLAGS += -DNDEBUG
 		LDFLAGS += -s
 		ifeq ($(optimize),yes)
 			CXXFLAGS += -O3
@@ -148,13 +148,13 @@ ifeq ($(COMP),emcc)
 
 	CXXFLAGS += $(COMPILER_FLAGS)
 
-    CXXFLAGS +=  -s FORCE_FILESYSTEM=1 -s DISABLE_EXCEPTION_CATCHING=1
+    CXXFLAGS +=  -s FORCE_FILESYSTEM=1 -s NO_DISABLE_EXCEPTION_CATCHING=1
 
 	ifeq ($(optimize),yes)
-			CXXFLAGS += -flto
+			CXXFLAGS +=
 	endif
 
-	LDFLAGS += -mwasm64
+	LDFLAGS += -flto # -g1 --closure 1 -l
 
 
 endif
@@ -166,19 +166,19 @@ endif
 LDFLAGS += $(CXXFLAGS)
 
 .PHONY: build clean
-build: bbpPairings.exe
+build: bbpPairings.js
 
 makefile_directory:=$(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 clean:
-	$(RM) bbpPairings.exe
+	$(RM) bbpPairings.js
 	find $(makefile_directory) -name \*.o -type f -delete
 	find $(makefile_directory) -name \*.d -type f -delete
 
 default:
 	build
 
-bbpPairings.exe: $(OBJECTS)
+bbpPairings.js: $(OBJECTS)
 	$(CXX) -o $@ $(OBJECTS) $(LDFLAGS)
 
 -include $(OBJECTS:%.o=%.d)

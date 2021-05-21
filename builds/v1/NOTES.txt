@@ -10,4 +10,4 @@ bbpPairings.exe --burstein TRFXSample3.txt -p
 Equivalent Usage with JavaScript (bbpPairings.js) and WebAssembly (bbpPairings.wasm)
 
 node bbpPairings.js --dutch - -p  <2020_06.trf 
-nodejs bbpPairings.js --burstein -p <TRFXSample3.txt 
+nodejs bbpPairings.js --burstein - -p <TRFXSample3.txt 
