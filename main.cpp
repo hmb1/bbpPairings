@@ -494,13 +494,32 @@ int main(const int argc, char**const argv)
       // Input a tournament file, and compute the pairings of the next round.
       try
       {
-        std::ifstream inputStream(inputFilename);
+
+          std::ifstream inputFileStream;
+          std::istream *inputStream;
+
+          if(!strcmp(inputFilename,"-"))
+          {
+             // exceptions require a filename - something more descriptive than "-"  as we are reading from stdin
+             inputFilename=strdup("stdin");
+             inputStream=&std::cin;
+
+          }
+          else
+              {
+
+              inputFileStream.open(inputFilename);
+              inputStream=&inputFileStream;
+
+          }
+
+
 
         // Read the tournament.
         tournament::Tournament tournament;
         try
         {
-          tournament = fileformats::trf::readFile(inputStream, true);
+          tournament = fileformats::trf::readFile(*inputStream, true);
         }
         catch (const fileformats::FileFormatException &exception)
         {
