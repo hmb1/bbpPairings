@@ -86,7 +86,7 @@ namespace tournament
 
 
     template
-    MatchesConfiguration::MatchesConfiguration<std::minstd_rand>(
+    MatchesConfiguration::MatchesConfiguration(
       Configuration &&,
       std::minstd_rand &);
 
