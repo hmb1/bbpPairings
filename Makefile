@@ -1,3 +1,27 @@
+#
+#
+# To run this makefile you must set the  environment var COMP to the compiler
+# you are using.  It currently handles the following compilers
+# COMP=gcc  gnu C/C++ compiler
+#
+# COMP=clang  C/C++ compiler
+#
+# COMP=emcc - This is the compiler provded buy emscripten.
+#             Underneather the wrapping it uses clang 13.0.0
+#             As of 2021-05-27  it only compiles to wasm ( webAssembly )
+#             32 bit.
+#
+# To build a regular binary executable run make with the command
+# make  bbpPairings.exe
+#
+# To make a WebAssembly binary run make with the command
+# make  or make bbpPairings.js
+# THe output will be javascript bbpPairings.js and wasm bpPairings.wasm
+#
+
+
+
+
 OBJECTS = main.o fileformats/generatorconfiguration.o fileformats/trf.o \
 	matching/computer.o matching/detail/graph.o matching/detail/parentblossom.o \
 	matching/detail/rootblossom.o swisssystems/burstein.o swisssystems/common.o \
@@ -22,7 +46,7 @@ max_points = 0
 max_rating = 0
 max_rounds = 0
 
-bits = 32
+bits = 64
 profile = no
 optimize = no
 static = no
@@ -141,6 +165,9 @@ endif
 
 ifeq ($(COMP),emcc)
 
+    # So far hav eonly compiled to wasm with emcc 32 bit compiler
+    bits=32
+
 	COMPILER_FLAGS += -std=c++17 -I. -m$(bits) -MD -MP -Wpedantic -pedantic-errors  -Wall # -frelaxed-template-template-args
 
 	CXX=em++
@@ -180,5 +207,9 @@ default:
 
 bbpPairings.js: $(OBJECTS)
 	$(CXX) -o $@ $(OBJECTS) $(LDFLAGS)
+
+bbpPairings.exe: $(OBJECTS)
+	$(CXX) -o $@ $(OBJECTS) $(LDFLAGS)
+
 
 -include $(OBJECTS:%.o=%.d)
