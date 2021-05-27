@@ -1,5 +1,4 @@
 #
-#
 # To run this makefile you must set the  environment var COMP to the compiler
 # you are using.  It currently handles the following compilers
 # COMP=gcc  gnu C/C++ compiler
@@ -14,14 +13,11 @@
 # To build a regular binary executable run make with the command
 # make  bbpPairings.exe
 #
-# To make a WebAssembly binary run make with the command
+# To make a WebAssembly binary run use the command
 # make  or make bbpPairings.js
-# THe output will be javascript bbpPairings.js and wasm bpPairings.wasm
+# The output will be javascript bbpPairings.js and wasm bpPairings.wasm
 #
-
-
-
-
+#
 OBJECTS = main.o fileformats/generatorconfiguration.o fileformats/trf.o \
 	matching/computer.o matching/detail/graph.o matching/detail/parentblossom.o \
 	matching/detail/rootblossom.o swisssystems/burstein.o swisssystems/common.o \
