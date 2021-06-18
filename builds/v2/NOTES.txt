@@ -1,0 +1,16 @@
+2021-06-18
+This javaScript now contains code for mounting an IDBFS 
+
+To run the JavaScript use node or nodejs.
+For various reasons the trf file is read in from stdin rather then from a file handle.
+Use the '-' to indicate to the main program to read from stdin
+
+usage with native UNIX  executable: ()
+
+bbpPairings.exe --dutch  2020_06.trf -p
+bbpPairings.exe --burstein TRFXSample3.txt -p
+
+Equivalent Usage with JavaScript (bbpPairings.js) and WebAssembly (bbpPairings.wasm)
+
+node bbpPairings.js --dutch - -p  <2020_06.trf 
+nodejs bbpPairings.js --burstein - -p <TRFXSample3.txt 
